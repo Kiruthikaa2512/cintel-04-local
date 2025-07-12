@@ -1,4 +1,3 @@
-````markdown
 # cintel-04-local
 
 This repository contains the local development version of a PyShiny dashboard project. It supports local development using Python, Visual Studio Code, and Git.
