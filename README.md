@@ -1,6 +1,3 @@
-
-### `README.md` for `cintel-04-local`
-
 ````markdown
 # cintel-04-local
 
