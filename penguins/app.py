@@ -44,6 +44,8 @@ app_ui = ui.page_sidebar(
     ui.markdown("**Instructions:** Use filters and dropdowns to explore the data visually."),
     ui.download_button("download_data", "Download Filtered Data"),
 
+    ui.output_text("summary_text"),  # Bonus Feature: Summary Text
+
     ui.layout_columns(
         ui.output_data_frame("data_table"),
         ui.output_data_frame("data_grid")
@@ -57,6 +59,10 @@ app_ui = ui.page_sidebar(
     ui.layout_columns(
         output_widget("violin_plot"),
         output_widget("plotly_scatterplot")
+    ),
+
+    ui.layout_columns(
+        output_widget("plotly_boxplot")  #Bonus Feature: Plotly Boxplot
     ),
 
     title="Penguin Explorer – Dashboard by Kiruthikaa"
@@ -82,6 +88,13 @@ def server(input, output, session):
     @render.data_frame
     def data_grid():
         return filtered_data()
+
+    @output
+    @render.text
+    def summary_text():
+        species = ", ".join(input.selected_species_list())
+        island = ", ".join(input.selected_island_list())
+        return f" You are viewing data for {species} penguins from {island} island(s)."
 
     @output
     @render_plotly
@@ -137,6 +150,18 @@ def server(input, output, session):
                 "bill_length_mm": "Bill Length (mm)",
                 "body_mass_g": "Body Mass (g)"
             }
+        )
+
+    @output
+    @render_plotly
+    def plotly_boxplot():
+        return px.box(
+            filtered_data(),
+            x="species",
+            y=input.selected_attribute(),
+            color="species",
+            points="all",
+            title=f"Boxplot of {input.selected_attribute()} by Species"
         )
 
     @output
