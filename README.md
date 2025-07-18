@@ -1,28 +1,40 @@
-# cintel-04-local
+#  Penguin Explorer – Dashboard by Kiruthikaa
 
-This repository contains the local development version of a PyShiny dashboard project. It supports local development using Python, Visual Studio Code, and Git.
+This repository contains the local and client-side deployment of an interactive PyShiny dashboard. It explores data from the `palmerpenguins` dataset with reactive inputs, visualizations, and download functionality — all built with Python and hosted for free via GitHub Pages.
+
+---
+
+## Live Dashboard
+
+View the hosted app here:  
+➡️ [https://kiruthikaa2512.github.io/cintel-04-local/](https://kiruthikaa2512.github.io/cintel-04-local/)
+
+---
 
 ## Project Files
 
-- `app.py` – Main PyShiny application
-- `requirements.txt` – List of required Python packages
-- `.gitignore` – Tells Git which files to ignore
-- `README.md` – Project overview and setup instructions
+- `penguins/app.py` – Main PyShiny application
+- `requirements.txt` – Required Python packages
+- `.gitignore` – Git exclusion settings
+- `README.md` – Project overview and instructions
+- `docs/` – Static exported dashboard for GitHub Pages
 
-## Getting Started
+---
+
+##  Getting Started Locally
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/cintel-04-local.git
+git clone https://github.com/Kiruthikaa2512/cintel-04-local.git
 cd cintel-04-local
-````
+```
 
-### 2. Create and Activate a Virtual Environment
+### 2. Create and Activate Virtual Environment
 
 ```powershell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
 ### 3. Install Required Packages
@@ -31,37 +43,66 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-### 4. Run the Shiny App
+### 4. Run the App Locally
 
 ```bash
-python app.py
+shiny run --reload --launch-browser penguins/app.py
 ```
 
-## Python Version
+> App opens in the browser at [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-This project uses **Python 3.13.5**.
+---
 
-### Verified With
+##  Static Export & GitHub Pages Deployment
 
-```powershell
-python --version
-# Python 3.13.5
+### 5. Export to Static Files
 
-pip --version
-# pip 24.x from ... (python 3.13)
+```bash
+.\.venv\Scripts\shinylive.exe export penguins docs
 ```
 
-### Python Installation Path (Example)
+### 6. Preview Locally
 
+```bash
+py -m http.server --directory docs --bind localhost 8008
 ```
-C:\Users\kirut\AppData\Local\Programs\Python\Python313\
+
+> Open [http://localhost:8008](http://localhost:8008) to test before publishing
+
+### 7. Push Changes to GitHub
+
+```bash
+git add .
+git commit -m "Exported static dashboard with bonus features"
+git push
 ```
 
-## Required Packages
+### 8. Enable GitHub Pages (One-Time Setup)
 
-Listed in `requirements.txt`:
+- Go to GitHub repo → **Settings → Pages**
+- Source: `main` branch  
+- Folder: `/docs`
+- Save and wait for the published link to appear
 
-```
+---
+
+##  Python Details
+
+- Version: `Python 3.13.5`
+- Verified with:
+  ```bash
+  python --version  # Python 3.13.5
+  pip --version     # pip 24.x
+  ```
+
+- Python Installation Path (example):  
+  `C:\Users\kirut\AppData\Local\Programs\Python\Python313\`
+
+---
+
+## Required Packages (via `requirements.txt`)
+
+```text
 faicons
 palmerpenguins
 pandas
@@ -74,4 +115,40 @@ shinywidgets
 ```
 
 ---
+
+## App Features
+
+- Plotly histogram, boxplot, scatterplot, and violin plots
+- Seaborn histogram with KDE
+- Reactive sidebar inputs to filter species, island, and selected attribute
+-  Display of filtered DataFrame in table and grid formats
+-  Download button for filtered data as CSV
+
+---
+
+## Bonus Features
+
+-  **Reactive Summary Text**  
+  Displays filter selection summary using species and island inputs
+
+-  **Boxplot of Selected Attribute by Species**  
+  Offers additional visual insight using Plotly
+
+-  **Custom Tab Title**  
+  Changed browser tab to “Penguin Explorer – Dashboard by Kiruthikaa”
+
+---
+
+##  Challenges Addressed
+
+- Resolved `ModuleNotFoundError` by activating `.venv` and properly installing packages
+- Adjusted CLI usage for `shinylive.exe` in PowerShell
+- Fixed GitHub Pages build error by exporting correct `/docs` folder and committing it
+- Verified deployment by visiting live dashboard and confirming reactive functionality
+
+---
+
+## Reflection
+
+This project reflects hands-on experience with local development, Python-based interactivity, static export workflows, and cloud publishing using GitHub Pages. It demonstrates troubleshooting, customization, and bonus exploration — showcasing a complete deployment cycle using Python alone.
 
